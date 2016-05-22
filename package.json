@@ -1,6 +1,6 @@
 {
   "name": "mkay",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A backend framework based on pragmatism and not convention",
   "main": "index.js",
   "repository": "punter/mkay",
