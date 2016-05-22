@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A backend framework based on pragmatism and not convention",
   "main": "index.js",
+  "repository": "punter/mkay",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
