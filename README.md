@@ -31,7 +31,7 @@ iced app.iced`
   ```
 
   - rest crud is automatically bound if `model.AUTO_EXPOSE` is set
-  - you can expose instance methods automatically using the `model.AUTO_EXPOSE` as well
+  - you can expose instance methods using `model.AUTO_EXPOSE` as well
 
 1. create a new `friend` using method override, like so
 
@@ -90,7 +90,7 @@ iced app.iced`
 
 ## autoloaded
 - models located in `./models`
-- routes located in `./routes` are loaded using the base file name (minus _.iced_)
+- routes located in `./routes` are loaded using the base file name as the route (minus _.iced_)
 - files in `./cron` are automatically `required`
 
 all of these file types have generators in their respective folders
