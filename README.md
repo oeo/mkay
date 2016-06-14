@@ -3,7 +3,7 @@
 # mkay
 iced, express, mongo/mongoose, redis/memcached, winston api boiler
 
-## them goals
+## dem goals
 - to produce very fast development of complex backends by being super opinionated
 - to inevitably break some rules, but as few as possible
 
