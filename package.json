@@ -1,12 +1,23 @@
 {
   "name": "mkay",
-  "version": "1.1.1",
-  "description": "A backend framework based on pragmatism and not convention",
-  "main": "index.js",
-  "repository": "punted/mkay",
+  "version": "1.0.0",
+  "description": "a backend framework based on pragmatism and not convention",
+  "main": "app.iced",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "basic-auth": "^1.0.4",
+    "colors": "^1.1.2",
+    "express": "^4.13.4",
+    "flat": "^2.0.0",
+    "iced-coffee-script": "^108.0.11",
+    "memory-cache": "^0.1.6",
+    "mongoose": "^4.5.0",
+    "taky-cache-loop": "0.0.2",
+    "wegweg": "^0.9.0",
+    "winston": "^2.2.0"
+  }
 }

@@ -1,0 +1,3 @@
+#!/bin/bash
+RUN_GENERATOR=1 `which iced` ../bin/create_model.iced $@
+
