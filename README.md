@@ -1,7 +1,7 @@
-# mkay backend
-iced, express, mongo/mongoose, redis/memcached, winston api boiler
-
 <img src="https://taky.s3.amazonaws.com/31gx7jor0psu.png" width="100">
+
+# mkay
+iced, express, mongo/mongoose, redis/memcached, winston api boiler
 
 ## them goals
 - to produce very fast development of complex backends by being super opinionated
@@ -11,10 +11,11 @@ iced, express, mongo/mongoose, redis/memcached, winston api boiler
 clone the repo
 
 ```bash
+git clone https://github.com/tosadvisor/mkay
 cd ./mkay
 sudo npm install -g iced-coffee-script
 sudo npm install --unsafe-perm
-iced app.iced`
+iced app.iced
 ```
 
 ## create your first model
