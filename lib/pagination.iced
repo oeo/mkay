@@ -13,7 +13,7 @@ module.exports = pagination = (opts={}) ->
   opts.arrow_mode ?= no
 
   if _.type(opts.cur_page) is 'string'
-    try opts.cur_page = pi opts.cur_page
+    try opts.cur_page = parseInt opts.cur_page
 
   pages_total = opts.total/opts.per_page
   pages_total = Math.ceil(pages_total) - 1
