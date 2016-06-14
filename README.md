@@ -39,7 +39,7 @@ iced app.iced`
 
   <img src="https://taky.s3.amazonaws.com/91gx71e555s1.png" width="500">
 
-  you can view the document, edit it, delete it, etc using common-sense overrides
+  you can view the document, edit it, delete it, etc using overrides
 
     - view one: `/friends/:_id`
     - delete: `/friends/:_id/?method=delete`
