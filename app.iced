@@ -13,10 +13,11 @@ app = _.app({
   body_parser: on
 })
 
-app.use (req,res,next) ->
+app.use ((req,res,next) ->
   if req.real_ip.includes(':ffff:') or req.real_ip.includes('127.0.0.1')
     req.real_ip = '127.0.0.1'
   return next()
+)
 
 # allow method override
 if conf.allow_http_method_override
@@ -27,7 +28,7 @@ if conf.allow_http_method_override
 
     if req.method is 'GET' and req.query.method
       method = req.query.method.toLowerCase().trim()
-      return next if method !in valid_methods
+      return next() if method !in valid_methods
 
       req.method = method.toUpperCase().trim()
 
