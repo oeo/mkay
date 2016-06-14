@@ -1,18 +1,14 @@
-<img src="https://taky.s3.amazonaws.com/31gx7jor0psu.png" width="150">
+# mkay backend
+iced, express, mongo/mongoose, redis/memcached, winston api boiler
 
-# mkay
-- iced
-- express
-- mongo/mongoose
-- redis/memcached
-- winston
+<img src="https://taky.s3.amazonaws.com/31gx7jor0psu.png" width="100">
 
-## dem goals
+## them goals
 - to produce very fast development of complex backends by being super opinionated
 - to inevitably break some rules, but as few as possible
 
 ## quick start
-- clone the repo
+clone the repo
 
 ```bash
 cd ./mkay

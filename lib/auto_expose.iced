@@ -93,14 +93,16 @@ module.exports = bind_entity = ((app,opt={}) ->
 
     return res.respond data
 
-  log.info "AUTO_EXPOSE", "Binding crud routes for `#{model.modelName}` to `#{opt.route}`"
+  if !process.env.SILENCE
+    log.info "AUTO_EXPOSE", "Binding crud routes for `#{model.modelName}` to `#{opt.route}`"
 
   # bind methods
   if opt?.methods?.length and _.keys(model.schema.methods).length
     for x in _.keys(model.schema.methods)
       continue if x !in opt.methods
 
-      log.info "AUTO_EXPOSE", "Binding model method `#{model.modelName}/#{x}()` to `POST #{opt.route}/:_id/#{x}`"
+      if !process.env.SILENCE
+        log.info "AUTO_EXPOSE", "Binding model method `#{model.modelName}/#{x}()` to `POST #{opt.route}/:_id/#{x}`"
 
       router.post "/:_id/#{x}", (req,res,next) ->
         await model

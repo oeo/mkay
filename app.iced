@@ -3,121 +3,155 @@ _ = require('wegweg')({
   shelljs: on
 })
 
+cluster = require 'cluster'
+
+if cluster.isWorker
+  process.env.SILENCE = 1
+
 require './lib/globals'
-require './lib/startup'
 
-models = require './lib/models'
+if !conf.cluster or cluster.isMaster
+  require './lib/startup'
 
-app = _.app({
-  static: off
-  body_parser: on
-})
+  _load_crons = (dir) ->
+    return if !_.exists(dir)
+    for x in ls "#{dir}/*.iced"
+      require("./#{x}")
 
-app.use ((req,res,next) ->
-  if req.real_ip.includes(':ffff:') or req.real_ip.includes('127.0.0.1')
-    req.real_ip = '127.0.0.1'
-  return next()
-)
+      if !process.env.SILENCE
+        log.info "Loaded cron: (#{_.base x})"
 
-# allow method override
-if conf.allow_http_method_override
-  log.warn 'Allowing HTTP method override using `req.query` (`?method=post`)'
+  _load_crons './cron'
+
+  if conf.cluster
+    log.info 'Cluster mode enabled via configuration'
+
+    num = require('os').cpus().length
+
+    for x in [1..num]
+      log.info 'Master', 'Spawning child'
+      cluster.fork()
+
+    cluster.on 'exit', ->
+      log.warn 'MASTER', 'Respawning child'
+      cluster.fork()
+
+if !conf.cluster or cluster.isWorker
+
+  app = _.app({
+    static: off
+    body_parser: on
+  })
 
   app.use ((req,res,next) ->
-    valid_methods = ['post','delete']
-
-    if req.method is 'GET' and req.query.method
-      method = req.query.method.toLowerCase().trim()
-      return next() if method !in valid_methods
-
-      req.method = method.toUpperCase().trim()
-
-      if method is 'post'
-        body = _.clone req.query
-        try delete body.method
-
-        req.query = {}
-        req.body = body
-
-    next()
+    if req.real_ip.includes(':ffff:') or req.real_ip.includes('127.0.0.1')
+      req.real_ip = '127.0.0.1'
+    return next()
   )
 
-app.use (require './lib/api_response').middleware
-app.use (require './lib/metadata').middleware
-
-coffee_query = require './lib/coffee_query'
-
-app.use coffee_query.parse_extra_filters
-app.use coffee_query.middleware
-
-app.use (require './lib/request_logging').middleware
-
-if conf.api.auth
-  app.use require('./lib/internal').middleware
-  log.info "Authentication is enabled"
-else
-  log.warn "Authentication is disabled via configuration"
-
-_mount_dir = (dir,prefix=null) ->
-  prefix = "/#{prefix}" if prefix and !prefix.startsWith('/')
-  for x in ls "#{dir}/*.iced"
-    route = '/' + _.base(x).split('.iced').shift()
-    route = prefix + route if prefix
-    route = route.split('//').join '/'
-    app.use route, require("./#{x}")
-
+  # allow method override
+  if conf.allow_http_method_override
     if !process.env.SILENCE
-      log.info "Mounted route: #{route} (#{x})"
+      log.warn 'Allowing HTTP method override using `req.query` (`?method=post`)'
 
-_load_crons = (dir) ->
-  return if !_.exists(dir)
-  for x in ls "#{dir}/*.iced"
-    require("./#{x}")
+    app.use ((req,res,next) ->
+      valid_methods = ['post','delete']
 
+      if req.method is 'GET' and req.query.method
+        method = req.query.method.toLowerCase().trim()
+        return next() if method !in valid_methods
+
+        req.method = method.toUpperCase().trim()
+
+        if method is 'post'
+          body = _.clone req.query
+          try delete body.method
+
+          req.query = {}
+          req.body = body
+
+      next()
+    )
+
+  app.use (require './lib/api_response').middleware
+  app.use (require './lib/metadata').middleware
+
+  coffee_query = require './lib/coffee_query'
+
+  app.use coffee_query.parse_extra_filters
+  app.use coffee_query.middleware
+
+  app.use (require './lib/request_logging').middleware
+
+  if conf.api.auth
+    app.use require('./lib/internal').middleware
     if !process.env.SILENCE
-      log.info "Loaded cron: (#{_.base x})"
+      log.info "Authentication is enabled"
+  else
+    if !process.env.SILENCE
+      log.warn "Authentication is disabled via configuration"
 
-_mount_dir './routes'
-_load_crons './cron'
+  _mount_dir = (dir,prefix=null) ->
+    prefix = "/#{prefix}" if prefix and !prefix.startsWith('/')
+    for x in ls "#{dir}/*.iced"
+      route = '/' + _.base(x).split('.iced').shift()
+      route = prefix + route if prefix
+      route = route.split('//').join '/'
+      app.use route, require("./#{x}")
 
-_auto_expose_models = (->
-  return if !conf.mongo
+      if !process.env.SILENCE
+        log.info "Mounted route: #{route} (#{x})"
 
-  bind_entity = require './lib/auto_expose'
+  _load_crons = (dir) ->
+    return if !_.exists(dir)
+    for x in ls "#{dir}/*.iced"
+      require("./#{x}")
 
-  for model_name in mongoose.modelNames()
-    model = mongoose.model(model_name)
+      if !process.env.SILENCE
+        log.info "Loaded cron: (#{_.base x})"
 
-    if opts = model.AUTO_EXPOSE
-      log.info "AUTO_EXPOSE", "Exposing model :#{model_name}", opts
+  _mount_dir './routes'
 
-      bind_entity app, (bind_opts = {
-        model: model
-        route: (opts.route ? '/' + opt.route.toLowerCase())
-        methods: (opts.methods ? [])
-      })
-)
+  _auto_expose_models = (->
+    return if !conf.mongo
 
-_auto_expose_models()
+    bind_entity = require './lib/auto_expose'
 
-app.get '/', (req,res,next) ->
-  res.respond {
-    pong: _.uuid()
-  }
+    for model_name in mongoose.modelNames()
+      model = mongoose.model(model_name)
 
-app.use (e,req,res,next) ->
-  e = new Error(e) if _.type(e) isnt 'error'
-  log.error e
-  return res.respond e, 500
+      if opts = model.AUTO_EXPOSE
 
-app.use (req,res,next) ->
-  log.error "404", req.method, req.url
-  res.respond (new Error 'Not found'), 404
+        if !process.env.SILENCE
+          log.info "AUTO_EXPOSE", "Exposing model :#{model_name}", opts
 
-##
-if !module.parent
+        bind_entity app, (bind_opts = {
+          model: model
+          route: (opts.route ? '/' + opt.route.toLowerCase())
+          methods: (opts.methods ? [])
+        })
+  )
+
+  _auto_expose_models()
+
+  app.get '/', (req,res,next) ->
+    res.respond {
+      pong: _.uuid()
+    }
+
+  app.use (e,req,res,next) ->
+    e = new Error(e) if _.type(e) isnt 'error'
+    log.error e
+    return res.respond e, 500
+
+  app.use (req,res,next) ->
+    log.error "404", req.method, req.url
+    res.respond (new Error 'Not found'), 404
+
+  if cluster.isWorker
+    log.info "WORKER", "Listening :#{conf.api.port}"
+  else
+    log.info "Listening :#{conf.api.port}"
+
   app.listen conf.api.port
-  log.info "Listening :#{conf.api.port}"
-else
-  module.exports = app
 
