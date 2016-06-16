@@ -10,6 +10,6 @@ eve.emit 'route_stat', 'routename', 'allowed'
 
 ###
 eve.on 'Hello', ->
-  log "Hello, world!"
+  log.info "Hello, world!"
 ###
 
