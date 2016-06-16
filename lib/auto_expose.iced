@@ -16,6 +16,43 @@ module.exports = bind_entity = ((app,opt={}) ->
   model = opt.model
   router = express.Router()
 
+  # bind instance methods
+  if opt?.methods?.length and _.keys(model.schema.methods).length
+    for x in _.keys(model.schema.methods)
+      continue if x !in opt.methods
+
+      if !process.env.SILENCE
+        log.info "AUTO_EXPOSE", "Binding model instance method `#{model.modelName}/#{x}()` to `POST #{opt.route}/:_id/#{x}`"
+
+      router.post "/:_id/#{x}", (req,res,next) ->
+        await model
+          .findOne({_id:req.params._id})
+          .exec defer e,item
+
+        if e then return next e
+        if !item then return next new Error 'Document not found'
+
+        await item[x] req.body, defer e,r
+        if e then return next e
+
+        return res.respond r
+
+  # bind static methods
+  if opt?.statics?.length and _.keys(model.schema.statics).length
+    for x in _.keys(model.schema.statics)
+      continue if x !in opt.statics
+
+      if !process.env.SILENCE
+        log.info "AUTO_EXPOSE", "Binding model static method `#{model.modelName}/#{x}()` to `POST #{opt.route}/#{x}`"
+
+      router.post "/#{x}", (req,res,next) ->
+        await model[x] req.body, defer e,r
+        if e then return next e
+        return res.respond r
+
+  if !process.env.SILENCE
+    log.info "AUTO_EXPOSE", "Binding crud routes for `#{model.modelName}` to `#{opt.route}`"
+
   # bind create
   router.post '/', (req,res,next) ->
     await model.create req.body, defer e,r
@@ -92,30 +129,6 @@ module.exports = bind_entity = ((app,opt={}) ->
     return next e if e
 
     return res.respond data
-
-  if !process.env.SILENCE
-    log.info "AUTO_EXPOSE", "Binding crud routes for `#{model.modelName}` to `#{opt.route}`"
-
-  # bind methods
-  if opt?.methods?.length and _.keys(model.schema.methods).length
-    for x in _.keys(model.schema.methods)
-      continue if x !in opt.methods
-
-      if !process.env.SILENCE
-        log.info "AUTO_EXPOSE", "Binding model method `#{model.modelName}/#{x}()` to `POST #{opt.route}/:_id/#{x}`"
-
-      router.post "/:_id/#{x}", (req,res,next) ->
-        await model
-          .findOne({_id:req.params._id})
-          .exec defer e,item
-
-        if e then return next e
-        if !item then return next new Error 'Document not found'
-
-        await item[x] req.body, defer e,r
-        if e then return next e
-
-        return res.respond r
 
   app.use opt.route, router
   return app

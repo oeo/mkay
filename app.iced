@@ -129,6 +129,7 @@ if !conf.cluster or cluster.isWorker
           model: model
           route: (opts.route ? '/' + opt.route.toLowerCase())
           methods: (opts.methods ? [])
+          statics: (opts.statics ? [])
         })
   )
 

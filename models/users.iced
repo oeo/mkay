@@ -27,6 +27,9 @@ UsersSchema = new Schema {
 
 UsersSchema.plugin models.base
 
+UsersSchema.statics.find_names = (opt={},cb) ->
+  return cb null, ['John','James','Jose']
+
 UsersSchema.methods.change_name = (opt={},cb) ->
   if !opt.name then return cb new Error "`opt.name` required"
   @name = opt.name
@@ -39,6 +42,9 @@ model.AUTO_EXPOSE = {
   route: '/users'
   methods: [
     'change_name'
+  ]
+  statics: [
+    'find_names'
   ]
 }
 
