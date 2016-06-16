@@ -13,7 +13,7 @@ coffee_query.convert = (str) ->
   res = {}
 
   str = str.trim()
-  str = '{' + str + '}' if !str.startsw('{')
+  str = '{' + str + '}' if !str.startsWith('{')
 
   res.original = str
 
@@ -32,7 +32,7 @@ coffee_query.convert = (str) ->
           if _.type(v) is 'regexp'
             continue if v.toString().contains('//')
             v = v.toString()
-            if v.startsw('/')
+            if v.startsWith('/')
               v = v.substr(1)
             [expression,flags] = v.split('/')
             v = new RegExp(expression, flags ? '')
@@ -55,7 +55,7 @@ coffee_query.parse_extra_filters = (req,res,next) ->
   filter = {}
 
   for k,v of req.query
-    if k.startsw('filter.')
+    if k.startsWith('filter.')
       name = k.substr("filter.".length)
       tmp = coffee_query.convert v
 
