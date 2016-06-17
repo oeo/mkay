@@ -1,5 +1,5 @@
-<p align="center">
-  <img src="https://taky.s3.amazonaws.com/21h0irbz7y0l.png" width="429">
+<p align="xcenter">
+  <img src="https://taky.s3.amazonaws.com/51h0j3s95801.png" width="282">
 </p>
 
 # mkay
