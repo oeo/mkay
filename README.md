@@ -1,5 +1,5 @@
 <p align="xcenter">
-  <img src="https://taky.s3.amazonaws.com/51h0j3s95801.png" width="282">
+  <img src="https://taky.s3.amazonaws.com/51h0j3s95801.png" width="200">
 </p>
 
 # mkay framework
