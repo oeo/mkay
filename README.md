@@ -2,7 +2,7 @@
   <img src="https://taky.s3.amazonaws.com/41h59xjd1rkk.png" width="250">
 </p>
 
-_build scalable rest apis really fast, mkay?_
+_build scalable apis really fast, mkay?_
 
 # mkay framework
 - iced/express/mongoose/winston
