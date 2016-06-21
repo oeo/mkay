@@ -15,13 +15,13 @@ process.env.CONFIG_FILE_LOCAL ?= require('path').dirname(process.env.CONFIG_FILE
 process.env.CONFIG_FILE_LOCAL = _.resolve process.env.CONFIG_FILE_LOCAL
 
 if !process.env.SILENCE
-  log.info "Loading config CONFIG_FILE: #{process.env.CONFIG_FILE}"
+  log.info "GLOBALS", "Loading config CONFIG_FILE: #{process.env.CONFIG_FILE}"
 
 config = require process.env.CONFIG_FILE
 
 if _.exists(process.env.CONFIG_FILE_LOCAL)
   if !process.env.SILENCE
-    log.info "Merging local config CONFIG_FILE_LOCAL: #{process.env.CONFIG_FILE_LOCAL}"
+    log.info "GLOBALS", "Merging local config CONFIG_FILE_LOCAL: #{process.env.CONFIG_FILE_LOCAL}"
 
   flatten = require 'flat'
   unflatten = require('flat').unflatten
@@ -37,18 +37,18 @@ root.conf = config
 
 if conf.mongo
   if !process.env.SILENCE
-    log.info "Connecting MongoDB (#{conf.mongo})"
+    log.info "GLOBALS", "Connecting MongoDB (#{conf.mongo})"
   root.db = root.mongo = _.mongo conf.mongo
   root.col = (x) -> db.collection x
 
 if conf.redis
   if !process.env.SILENCE
-    log.info "Connecting Redis (#{conf.redis})"
+    log.info "GLOBALS", "Connecting Redis (#{conf.redis})"
   root.redis = _.redis conf.redis
 
 if conf.memcached
   if !process.env.SILENCE
-    log.info "Connecting Memcached (#{conf.memcached})"
+    log.info "GLOBALS", "Connecting Memcached (#{conf.memcached})"
   root.memcached = _.memcached conf.memcached
 
 root.eve = _.eve()
@@ -61,7 +61,7 @@ if conf.mongo
     if process.env.MONGOOSE_MODEL_DEVEL
       if _.base(process.env.MONGOOSE_MODEL_DEVEL) is (base = _.base(x))
         if !process.env.SILENCE
-          log.warn "Skipping model #{base} (env.MONGOOSE_MODEL_DEVEL)"
+          log.warn "GLOBALS", "Skipping model #{base} (env.MONGOOSE_MODEL_DEVEL)"
         continue
     require x
 
@@ -75,7 +75,7 @@ if conf.mongo
       model = db[x] = db[y] = mongoose.model(x)
 
       if !process.env.SILENCE
-        log.info "Registered model: #{x}"
+        log.info "GLOBALS", "Registered model: #{x}"
 
 root.pjson = root.package_json =
   JSON.parse _.reads __dirname + '/../package.json'

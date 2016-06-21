@@ -19,21 +19,21 @@ if !conf.cluster or cluster.isMaster
       require("./#{x}")
 
       if !process.env.SILENCE
-        log.info "Loaded cron: (#{_.base x})"
+        log.info "APP", "Loaded cron: (#{_.base x})"
 
   _load_crons './cron'
 
   if conf.cluster
-    log.info 'Cluster mode enabled via configuration'
+    log.info "APP", 'Cluster mode enabled via configuration'
 
     num = require('os').cpus().length
 
     for x in [1..num]
-      log.info 'Master', 'Spawning child'
+      log.info "APP", 'MASTER', 'Spawning child'
       cluster.fork()
 
     cluster.on 'exit', ->
-      log.warn 'MASTER', 'Respawning child'
+      log.warn "APP", 'MASTER', 'Respawning child'
       cluster.fork()
 
 if !conf.cluster or cluster.isWorker
@@ -52,7 +52,7 @@ if !conf.cluster or cluster.isWorker
   # allow method override
   if conf.allow_http_method_override
     if !process.env.SILENCE
-      log.warn 'Allowing HTTP method override using `req.query` (`?method=post`)'
+      log.warn "APP", 'Allowing HTTP method override using `req.query` (`?method=post`)'
 
     app.use ((req,res,next) ->
       valid_methods = ['post','delete']
@@ -86,10 +86,10 @@ if !conf.cluster or cluster.isWorker
   if conf.api.auth
     app.use require('./lib/internal').middleware
     if !process.env.SILENCE
-      log.info "Authentication is enabled"
+      log.info "APP", "Authentication is enabled"
   else
     if !process.env.SILENCE
-      log.warn "Authentication is disabled via configuration"
+      log.warn "APP", "Authentication is disabled via configuration"
 
   _mount_dir = (dir,prefix=null) ->
     prefix = "/#{prefix}" if prefix and !prefix.startsWith('/')
@@ -100,7 +100,7 @@ if !conf.cluster or cluster.isWorker
       app.use route, require("./#{x}")
 
       if !process.env.SILENCE
-        log.info "Mounted route: #{route} (#{x})"
+        log.info "APP", "Mounted route: #{route} (#{x})"
 
   _load_crons = (dir) ->
     return if !_.exists(dir)
@@ -108,7 +108,7 @@ if !conf.cluster or cluster.isWorker
       require("./#{x}")
 
       if !process.env.SILENCE
-        log.info "Loaded cron: (#{_.base x})"
+        log.info "APP", "Loaded cron: (#{_.base x})"
 
   _mount_dir './routes'
 
@@ -150,9 +150,9 @@ if !conf.cluster or cluster.isWorker
     res.respond (new Error 'Not found'), 404
 
   if cluster.isWorker
-    log.info "WORKER", "Listening :#{conf.api.port}"
+    log.info "APP", "WORKER", "Listening :#{conf.api.port}"
   else
-    log.info "Listening :#{conf.api.port}"
+    log.info "APP", "Listening :#{conf.api.port}"
 
   app.listen conf.api.port
 
