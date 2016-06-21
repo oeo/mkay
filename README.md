@@ -1,5 +1,5 @@
 <p align="xcenter">
-  <img src="https://taky.s3.amazonaws.com/01h59tshidsy.jpg" width="250">
+  <img src="https://taky.s3.amazonaws.com/41h59xjd1rkk.png" width="250">
 </p>
 
 _build scalable rest apis really fast, mkay?_
