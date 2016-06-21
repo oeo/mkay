@@ -8,6 +8,7 @@ _build scalable rest apis really fast, mkay?_
 - iced/express/mongoose/winston
 - mongodb/redis/memcached
 - generate everything, produce complex apis rapidly
+- cluster supported
 
 # quick start
 
