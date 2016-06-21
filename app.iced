@@ -9,6 +9,7 @@ if cluster.isWorker
   process.env.SILENCE = 1
 
 require './lib/globals'
+require './lib/listeners'
 
 if !conf.cluster or cluster.isMaster
   require './lib/startup'
