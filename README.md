@@ -2,15 +2,12 @@
   <img src="https://taky.s3.amazonaws.com/01h59tshidsy.jpg" width="250">
 </p>
 
-_build scalable rest apis really, really fast, mkay?_
+_build scalable rest apis really fast, mkay?_
 
 # mkay framework
 - iced/express/mongoose/winston
 - mongodb/redis/memcached
-- generate everything
-- produce complex apis extremely rapidly
-- automatic expose crud over rest
-- automatic expose mongoose instance and static methods over rest
+- generate everything, produce complex apis rapidly
 
 # quick start
 
@@ -30,8 +27,8 @@ cd ./models
 ```
 
 - crud is automatically exposed if `model.AUTO_EXPOSE` is exported
-- expose instance methods using `model.AUTO_EXPOSE.methods`
-- expose static methods using `model.AUTO_EXPOSE.statics`
+- expose instance methods using `model.AUTO_EXPOSE.methods=[]`
+- expose static methods using `model.AUTO_EXPOSE.statics=[]`
 
 ### create a new friend
 
