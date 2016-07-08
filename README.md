@@ -9,7 +9,7 @@ by centralizing the bulk of your work inside of models and libraries.
 it generates a large amount and can automatically expose mostly everything
 else without you having to do much. the theory behind it is that you spend
 very little time worrying about convention and schematics and the most amount
-of time possible writing actual "meat".
+of time possible writing "meat".
 
 # key concepts
 - iced/express/mongoose/winston
@@ -64,7 +64,7 @@ cd ./models
 - edit `/friends/:_id/?method=post&name=James`
 - delete `/friends/:_id/?method=delete`
 
-### create and expose an instance method
+### create/expose a model instance method
 
 add a method to `FriendsSchema`- auto-exposed methods must always
 take an object as the first parameter and a callback as the second
@@ -95,22 +95,25 @@ method and returns the result to the browser
 
 ---
 
-# global ns
-- `log` winston instance
+# global ns pollutants
 - `db` mongojs instance
 - `db.<Model>` (mongoose models loaded into `db`)
 - `redis` ioredis instance
 - `memcached` node-memcached instance
 - `conf` configuration object
 - `eve` eventemitter2 instance
+- `log` winston instance
+- `ll` alias for console.log
+- `lp` alias for console.log pretty print (`JSON.stringify x null, 2`)
 
 # auto-loaded
 - models located in `./models`
 - routes located in `./routes` are loaded using the base file name minus the
   extension as the path prefix
-- files in `./cron` are automatically `required`
+- files in `./cron` are automatically `required`, a bare-bones generator is
+  provided
 
-# chmod +x
+# chmod +x generators
 - `./crons/_create`
 - `./models/_create`
 - `./routes/_create`
