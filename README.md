@@ -104,7 +104,7 @@ method and returns the result to the browser
 - `eve` eventemitter2 instance
 - `log` winston instance
 - `ll` alias for console.log
-- `lp` alias for console.log pretty print (`JSON.stringify x null, 2`)
+- `lp` alias for console.log pretty print (`JSON.stringify obj, null, 2`)
 
 # auto-loaded
 - models located in `./models`
