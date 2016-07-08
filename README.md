@@ -2,8 +2,6 @@
   <img src="https://taky.s3.amazonaws.com/41h59xjd1rkk.png" width="250">
 </p>
 
-_build scalable apis fast and focus on what's effective, mkay?_
-
 # mkay framework
 - iced/express/mongoose/winston
 - mongodb/redis/memcached
@@ -19,6 +17,8 @@ sudo npm i -g iced-coffee-script
 npm i --unsafe-perm
 iced app.iced
 ```
+
+<img src="https://taky.s3.amazonaws.com/81hnpkj7468m.png" width="2046">
 
 ### generate a model
 
@@ -71,7 +71,7 @@ method and returns the result to the browser
 
 ---
 
-## global ns
+# global ns
 - `log` winston instance
 - `db` mongojs instance
 - `db.<Model>` (mongoose models loaded into `db`)
@@ -80,13 +80,13 @@ method and returns the result to the browser
 - `conf` configuration object
 - `eve` eventemitter2 instance
 
-## auto-loaded
+# auto-loaded
 - models located in `./models`
 - routes located in `./routes` are loaded using the base file name minus the
   extension as the path prefix
 - files in `./cron` are automatically `required`
 
-## chmod +x
+# chmod +x
 - `./crons/_create`
 - `./models/_create`
 - `./routes/_create`
