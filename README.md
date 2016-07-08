@@ -2,11 +2,36 @@
   <img src="https://taky.s3.amazonaws.com/41h59xjd1rkk.png" width="250">
 </p>
 
-# mkay framework
+# mkay
+`mkay` is a framework that that allows you to develop complex backends quickly
+by centralizing the bulk of your work inside of models and libraries.
+
+it generates a large amount and can automatically expose mostly everything
+else without you having to do much. the theory behind it is that you spend
+very little time worrying about convention and schematics and the most amount
+of time possible writing actual "meat".
+
+# key concepts
 - iced/express/mongoose/winston
 - mongodb/redis/memcached
-- generate everything, produce complex apis rapidly
 - cluster supported
+- generate everything, produce complex apis rapidly
+  - chmod +x bin generators for all significant application files (models,
+    crons, routes) in respective folders
+- output middlewares (`res.respond()`)
+  - json, jsonp, json/pretty (`?format=json&pretty=1`)
+- http auth middlewares
+- crud/rest doesn't even need to be generated, it's just exposed via the
+  mongoose models
+  - method override allows for easy testing using the browser (`?method=post`)
+  - coffeescript json query filters
+  - lean queries/field selection
+  - pagination
+- flexible
+  - add custom routes
+  - append auto-exposed model crud routes, make cache layers over mongo,
+    whatever
+  - configure which models/methods/statics you want exposed
 
 # quick start
 
@@ -14,7 +39,7 @@
 git clone https://github.com/tosadvisor/mkay
 cd ./mkay
 sudo npm i -g iced-coffee-script
-npm i --unsafe-perm
+npm i
 iced app.iced
 ```
 
@@ -31,7 +56,7 @@ cd ./models
 - expose instance methods using `model.AUTO_EXPOSE.methods=[]`
 - expose static methods using `model.AUTO_EXPOSE.statics=[]`
 
-### create a new friend
+### create a new "friend"
 
 `http://localhost:10001/friends?method=post&name=John`
 
@@ -40,7 +65,7 @@ cd ./models
 - edit `/friends/:_id/?method=post&name=James`
 - delete `/friends/:_id/?method=delete`
 
-### create and expose a model's instance method
+### create and expose an instance method
 
 add a method to `FriendsSchema`- auto-exposed methods must always
 take an object as the first parameter and a callback as the second
