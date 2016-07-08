@@ -18,15 +18,14 @@ of time possible writing actual "meat".
 - generate everything, produce complex apis rapidly
   - chmod +x bin generators for all significant application files (models,
     crons, routes) in respective folders
-- output middlewares (`res.respond()`)
-  - json, jsonp, json/pretty (`?format=json&pretty=1`)
-- http auth middlewares
-- crud/rest doesn't even need to be generated, it's just exposed via the
-  mongoose models
+- output middleware (`res.respond()`)
+  - json/jsonp/pretty (`?format=json&pretty=1`)
+- http auth middleware
+- crud/rest doesn't need to be generated, it's just exposed via model export
   - method override allows for easy testing using the browser (`?method=post`)
-  - coffeescript json query filters
+  - coffeescript json query filters and sort selectors
   - lean queries/field selection
-  - pagination
+  - pagination (`?per_page=&cur_page=`)
 - flexible
   - add custom routes
   - append auto-exposed model crud routes, make cache layers over mongo,
