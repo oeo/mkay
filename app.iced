@@ -25,12 +25,14 @@ if !conf.cluster or cluster.isMaster
   _load_crons './cron'
 
   if conf.cluster
-    log.info "APP", 'Cluster mode enabled via configuration'
+    if !process.env.SILENCE
+      log.info "APP", 'Cluster mode enabled via configuration'
 
     num = require('os').cpus().length
 
     for x in [1..num]
-      log.info "APP", 'MASTER', 'Spawning child'
+      if !process.env.SILENCE
+        log.info "APP", 'MASTER', 'Spawning child'
       cluster.fork()
 
     cluster.on 'exit', ->
@@ -151,9 +153,11 @@ if !conf.cluster or cluster.isWorker
     res.respond (new Error 'Not found'), 404
 
   if cluster.isWorker
-    log.info "APP", "WORKER", "Listening :#{conf.api.port}"
+    if !process.env.SILENCE
+      log.info "APP", "WORKER", "Listening :#{conf.api.port}"
   else
-    log.info "APP", "Listening :#{conf.api.port}"
+    if !process.env.SILENCE
+      log.info "APP", "Listening :#{conf.api.port}"
 
   app.listen conf.api.port
 
