@@ -20,6 +20,7 @@ of time possible writing "meat".
     crons, routes) in respective folders
 - output middleware (`res.respond()`)
   - json/jsonp/pretty (`?format=json&pretty=1`)
+  - xml
 - http auth middleware
 - crud/rest doesn't need to be generated, it's just exposed via model export
   - method override allows for easy testing using the browser (`?method=post`)

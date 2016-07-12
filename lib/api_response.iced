@@ -31,7 +31,7 @@ api_response.middleware = (req,res,next) ->
 
     res.status = status if status
 
-    formats = ['json','jsonp']
+    formats = ['json','jsonp','xml']
 
     if req.query.format and req.query.format in formats
       format = req.query.format
@@ -47,6 +47,11 @@ api_response.middleware = (req,res,next) ->
 
     if format is 'jsonp'
       return res.jsonp obj
+
+    if format is 'xml'
+      bulk = require('json2xml')({root:obj},{header:on})
+      res.set 'content-type', 'text/xml'
+      return res.end bulk
 
   next()
 
