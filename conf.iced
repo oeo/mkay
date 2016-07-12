@@ -1,5 +1,5 @@
 module.exports = conf = {
-  mongo: 'localhost/basic-api'
+  mongo: 'localhost/mkay-api'
   redis: 'localhost'
   memcached: 'localhost'
 
@@ -7,7 +7,7 @@ module.exports = conf = {
 
   api: {
     port: 10001
-    url: 'http://127.0.0.1:10001/v1'
+    url: 'http://127.0.0.1:10001'
     auth: null
   }
 
