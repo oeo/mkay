@@ -15,5 +15,6 @@ module.exports = conf = {
 
   developer:
     show_error_stack: on
+    debug_ip: '107.181.69.70'
 }
 

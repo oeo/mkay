@@ -47,8 +47,18 @@ if !conf.cluster or cluster.isWorker
   })
 
   app.use ((req,res,next) ->
-    if req.real_ip.includes(':ffff:') or req.real_ip.includes('127.0.0.1')
-      req.real_ip = '127.0.0.1'
+    needles = [
+      ':ffff:'
+      '127.0.0.1'
+      '::'
+    ]
+
+    for x in needles
+      if req.real_ip.includes(x)
+        req.real_ip = '127.0.0.1'
+        req.real_ip = ip if ip = conf.developer.debug_ip
+        break
+
     return next()
   )
 
@@ -73,7 +83,7 @@ if !conf.cluster or cluster.isWorker
           req.query = {}
           req.body = body
 
-      next()
+      return next()
     )
 
   app.use (require './lib/api_response').middleware
@@ -93,6 +103,26 @@ if !conf.cluster or cluster.isWorker
   else
     if !process.env.SILENCE
       log.warn "APP", "Authentication is disabled via configuration"
+
+  if _.exists(dir = __dirname + '/views')
+    exphbs  = require('express-handlebars')
+
+    app.engine('.hbs',exphbs({
+      layout: no
+      extname: '.hbs'
+      partialsDir: dir
+    }))
+
+    app.set('view engine','hbs')
+
+    if !process.env.SILENCE
+      log.info "APP", "Adding Handlebars render engine: views/*.hbs"
+
+  if _.exists(dir = __dirname + '/static')
+    app.use('/static',require('express').static('static'))
+
+    if !process.env.SILENCE
+      log.info "APP", "Serving static assets: static/*: /static"
 
   _mount_dir = (dir,prefix=null) ->
     prefix = "/#{prefix}" if prefix and !prefix.startsWith('/')
