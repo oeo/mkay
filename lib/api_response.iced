@@ -46,12 +46,13 @@ api_response.middleware = (req,res,next) ->
         return res.json obj
 
     if format is 'jsonp'
+      if (cbfn = req.query.cb) and !req.query.callback
+        req.query.callback = cbfn
       return res.jsonp obj
 
     if format is 'xml'
-      bulk = require('json2xml')({root:obj},{header:on})
       res.set 'content-type', 'text/xml'
-      return res.end bulk
+      return res.end require('json2xml')({root:obj},{header:on})
 
   next()
 
