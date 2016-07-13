@@ -11,7 +11,7 @@ else without you having to do much. the theory behind it is that you spend
 very little time worrying about convention and schematics and the most amount
 of time possible writing "meat".
 
-# key concepts
+# glancing
 - iced/express/mongoose/winston
 - mongodb/redis/memcached
 - cluster supported
