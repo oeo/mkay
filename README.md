@@ -113,7 +113,7 @@ method and returns the result to the browser
   extension as the path prefix
 - files in `./cron` are automatically `required`, a bare-bones generator is
   provided
-- if `./views` exists,  `.hbs` files are renderable via `res.render()`
+- if `./views` exists `.hbs` files are renderable via `res.render()`
 - if `./static` exists it is automatically served using express' static
   middleware
 
