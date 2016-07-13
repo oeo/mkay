@@ -180,7 +180,7 @@ if !conf.cluster or cluster.isWorker
 
   app.use (req,res,next) ->
     log.error "404", req.method, req.url
-    res.respond (new Error 'Not found'), 404
+    return res.respond (new Error 'Not found'), 404
 
   if cluster.isWorker
     if !process.env.SILENCE

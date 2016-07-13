@@ -30,11 +30,12 @@ api_response.middleware = (req,res,next) ->
         _meta: req.metadata
 
     res.status = status if status
-
     formats = ['json','jsonp','xml']
 
-    if req.query.format and req.query.format in formats
-      format = req.query.format
+    format_input = req.query.format ? req.body.format
+
+    if format_input and format_input in formats
+      format = format_input
     else
       format = 'json'
 
