@@ -166,7 +166,11 @@ if !conf.cluster or cluster.isWorker
         })
   )
 
-  _auto_expose_models()
+  if conf.allow_model_exposure
+    _auto_expose_models()
+  else
+    if !process.env.SILENCE
+      log.warn "AUTO_EXPOSE", "Model exposure is disabled via configuration"
 
   app.get '/', (req,res,next) ->
     res.respond {

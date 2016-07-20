@@ -12,6 +12,7 @@ module.exports = conf = {
   }
 
   allow_http_method_override: on
+  allow_model_exposure: on
 
   developer:
     show_error_stack: on
