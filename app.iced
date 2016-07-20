@@ -172,6 +172,10 @@ if !conf.cluster or cluster.isWorker
     if !process.env.SILENCE
       log.warn "AUTO_EXPOSE", "Model exposure is disabled via configuration"
 
+  app.use (req,res,next) ->
+    res.locals.conf = conf
+    return next()
+
   app.get '/', (req,res,next) ->
     res.respond {
       pong: _.uuid()
