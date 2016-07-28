@@ -36,7 +36,7 @@ helpers.coffee = helpers.iced = cache_block_helper 'coffee', (script) ->
   args = arguments
   ret = do ->
     if src = args['0']?.fn()
-      js = iced.compile src
+      js = coffee.compile src
       return "<script>#{js}</script>"
     ''
   ret
