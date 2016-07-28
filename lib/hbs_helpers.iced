@@ -114,5 +114,3 @@ for x in [
 # merge swag
 helpers[k] = v for k,v of (require('./swag.js').helpers)
 
-module.exports = helpers
-

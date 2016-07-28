@@ -111,6 +111,7 @@ if !conf.cluster or cluster.isWorker
       layout: no
       extname: '.hbs'
       partialsDir: dir
+      helpers: require('./lib/hbs_helpers')
     }))
 
     app.set('view engine','hbs')
