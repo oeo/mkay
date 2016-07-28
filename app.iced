@@ -87,6 +87,11 @@ if !conf.cluster or cluster.isWorker
     )
 
   app.use (require './lib/api_response').middleware
+
+  if conf.developer.show_error_stack
+    if !process.env.SILENCE
+      log.warn 'APP', 'DEVELOPER', "Error stack is exposed in browser via configuration"
+
   app.use (require './lib/metadata').middleware
 
   coffee_query = require './lib/coffee_query'
@@ -131,7 +136,8 @@ if !conf.cluster or cluster.isWorker
       route = '/' + _.base(x).split('.iced').shift()
       route = prefix + route if prefix
       route = route.split('//').join '/'
-      app.use route, require("./#{x}")
+
+      app.use (route), require("./#{x}")
 
       if !process.env.SILENCE
         log.info "APP", "Mounted route: #{route} (#{x})"
@@ -157,7 +163,7 @@ if !conf.cluster or cluster.isWorker
       if opts = model.AUTO_EXPOSE
 
         if !process.env.SILENCE
-          log.info "AUTO_EXPOSE", "Exposing model :#{model_name}", opts
+          log.info 'APP', "AUTO_EXPOSE", "Exposing model :#{model_name}", opts
 
         bind_entity app, (bind_opts = {
           model: model
@@ -171,7 +177,7 @@ if !conf.cluster or cluster.isWorker
     _auto_expose_models()
   else
     if !process.env.SILENCE
-      log.warn "AUTO_EXPOSE", "Model exposure is disabled via configuration"
+      log.warn 'APP', "AUTO_EXPOSE", "Model exposure is disabled via configuration"
 
   app.use (req,res,next) ->
     res.locals.conf = conf
