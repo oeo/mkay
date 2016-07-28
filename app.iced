@@ -109,6 +109,19 @@ if !conf.cluster or cluster.isWorker
     if !process.env.SILENCE
       log.warn "APP", "Authentication is disabled via configuration"
 
+  if conf.cookie_session.enabled
+    app.use require('cookie-session')(session_conf = {
+      name: (conf.cookie_session.name ? 's')
+      secret: conf.cookie_session.secret_key
+    })
+
+    app.use (req,res,next) ->
+      res.locals.session = req.session
+      return next()
+
+    if !process.env.SILENCE
+      log.info 'APP', "Cookie session enabled: #{session_conf.name}/#{session_conf.secret}"
+
   if _.exists(dir = __dirname + '/views')
     exphbs  = require('express-handlebars')
 
@@ -136,6 +149,8 @@ if !conf.cluster or cluster.isWorker
       route = '/' + _.base(x).split('.iced').shift()
       route = prefix + route if prefix
       route = route.split('//').join '/'
+
+      route = '/' if _.base(x).startsWith('_')
 
       app.use (route), require("./#{x}")
 
@@ -177,7 +192,7 @@ if !conf.cluster or cluster.isWorker
     _auto_expose_models()
   else
     if !process.env.SILENCE
-      log.warn 'APP', "AUTO_EXPOSE", "Model exposure is disabled via configuration"
+      log.warn 'APP', "AUTO_EXPOSE", "Model exposure disabled via configuration"
 
   app.use (req,res,next) ->
     res.locals.conf = conf
