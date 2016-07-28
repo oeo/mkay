@@ -178,7 +178,7 @@ if !conf.cluster or cluster.isWorker
       if opts = model.AUTO_EXPOSE
 
         if !process.env.SILENCE
-          log.info 'APP', "AUTO_EXPOSE", "Exposing model :#{model_name}", opts
+          log.info "AUTO_EXPOSE", "Exposing model :#{model_name}", opts
 
         bind_entity app, (bind_opts = {
           model: model
@@ -198,10 +198,16 @@ if !conf.cluster or cluster.isWorker
     res.locals.conf = conf
     return next()
 
-  app.get '/', (req,res,next) ->
-    res.respond {
-      pong: _.uuid()
-    }
+  # underscore routes
+  if conf.allow_underscore_routes
+    app.get '/_/ping', (req,res,next) ->
+      res.respond {pong:_.uuid()}
+
+    app.get '/_/stats', (req,res,next) ->
+      res.respond (require './lib/request_logging').stats()
+
+    if !process.env.SILENCE
+      log.warn 'APP', 'Underscore routes enabled'
 
   app.use (e,req,res,next) ->
     e = new Error(e) if _.type(e) isnt 'error'

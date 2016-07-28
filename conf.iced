@@ -22,6 +22,7 @@ module.exports = conf = {
   # global settings
   allow_http_method_override: on
   allow_model_exposure: on
+  allow_underscore_routes: on
 
   # developer settings
   developer:
