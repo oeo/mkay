@@ -1,6 +1,6 @@
 {
   "name": "mkay",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "a backend framework based on pragmatism and not convention",
   "main": "app.iced",
   "scripts": {
