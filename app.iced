@@ -101,6 +101,10 @@ if !conf.cluster or cluster.isWorker
 
   app.use (require './lib/request_logging').middleware
 
+  app.use (req,res,next) ->
+    res.locals.conf = conf
+    return next()
+
   if conf.api.auth
     app.use require('./lib/internal').middleware
     if !process.env.SILENCE
@@ -193,10 +197,6 @@ if !conf.cluster or cluster.isWorker
   else
     if !process.env.SILENCE
       log.warn 'APP', "AUTO_EXPOSE", "Model exposure disabled via configuration"
-
-  app.use (req,res,next) ->
-    res.locals.conf = conf
-    return next()
 
   # underscore routes
   if conf.allow_underscore_routes
