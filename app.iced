@@ -101,6 +101,10 @@ if !conf.cluster or cluster.isWorker
 
   app.use (require './lib/request_logging').middleware
 
+  app.use (req,res,next) ->
+    res.locals.conf = conf
+    return next()
+
   if conf.api.auth
     app.use require('./lib/internal').middleware
     if !process.env.SILENCE
@@ -209,10 +213,6 @@ if !conf.cluster or cluster.isWorker
 
   if ___public_routes.length and conf.api.auth
     log.warn "AUTO_EXPOSE", "Exposing #{___public_routes.length} public routes", ___public_routes
-
-  app.use (req,res,next) ->
-    res.locals.conf = conf
-    return next()
 
   # underscore routes
   if conf.allow_underscore_routes
