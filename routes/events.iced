@@ -9,7 +9,7 @@ app.get '/public-method', (req,res,next) ->
 
 ##
 app.AUTO_EXPOSE = {
-  prefix: '/events'
+  route: '/events'
   public: yes
 }
 

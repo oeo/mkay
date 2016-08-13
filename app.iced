@@ -162,8 +162,8 @@ if !conf.cluster or cluster.isWorker
 
       continue if !item.AUTO_EXPOSE
 
-      if item.AUTO_EXPOSE?.prefix
-        route = item.AUTO_EXPOSE.prefix
+      if item.AUTO_EXPOSE?.route
+        route = item.AUTO_EXPOSE.route
 
       if item.AUTO_EXPOSE?.public
         if _.type(item.AUTO_EXPOSE?.public) is 'boolean'
