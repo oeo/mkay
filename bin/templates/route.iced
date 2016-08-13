@@ -63,3 +63,6 @@ app.delete '/:_id', (req,res,next) ->
   if e then return next e
   res.respond yes
 
+##
+app.AUTO_EXPOSE = on
+

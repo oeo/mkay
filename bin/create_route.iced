@@ -47,6 +47,7 @@ generator.generate = ((opt={},cb) ->
     bulk = macros(bulk,data,no)
   else
     data = {}
+
     bulk = _.reads __dirname + '/templates/route-plain.iced'
     bulk = macros(bulk,data,no)
 

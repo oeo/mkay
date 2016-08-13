@@ -8,8 +8,5 @@ app.get '/ping', (req,res,next) ->
   res.respond pong:_.uuid()
 
 ##
-app.AUTO_EXPOSE = {
-  prefix: '/'
-  public: no
-}
+app.AUTO_EXPOSE = on
 
