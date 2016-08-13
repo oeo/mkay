@@ -1,5 +1,5 @@
 # vim: set expandtab tabstop=2 shiftwidth=2 softtabstop=2
-_ = require ('wegweg')({
+_ = require('wegweg')({
   globals: off
 })
 
@@ -9,7 +9,7 @@ valid_key = conf.api.auth
 CacheLoop = require 'taky-cache-loop'
 
 keys_cache = new CacheLoop {
-  key: 'tapp:apikeys'
+  key: 'mkay:apikeys'
   interval: '10 seconds'
   use: ((cb) ->
     if !conf.mongo then return cb null, []
@@ -27,12 +27,16 @@ internal = {}
 
 internal.middleware = (req,res,next) ->
   ignore = [
-    '/public'
-    '/ping'
+    '/_/'
   ]
-  
+
   for x in ignore
     return next() if req.path.startsWith(x)
+
+  if req.path in ___public_routes
+    if !process.env.SILENCE
+      log.warn 'AUTH_MIDDLEWARE', "Allowing request #{req.method} #{req.path} (public route)"
+    return next()
 
   forbid = ->
     req.no_stack = yes

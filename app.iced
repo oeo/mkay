@@ -143,8 +143,9 @@ if !conf.cluster or cluster.isWorker
     if !process.env.SILENCE
       log.info "APP", "Serving static assets: static/*: /static"
 
-  _mount_dir = (dir,prefix=null) ->
+  _mount_routes = (dir,prefix=null) ->
     prefix = "/#{prefix}" if prefix and !prefix.startsWith('/')
+
     for x in ls "#{dir}/*.iced"
       route = '/' + _.base(x).split('.iced').shift()
       route = prefix + route if prefix
@@ -152,20 +153,32 @@ if !conf.cluster or cluster.isWorker
 
       route = '/' if _.base(x).startsWith('_')
 
-      app.use (route), require("./#{x}")
+      item = require("./#{x}")
+      stack_routes = _.ucmap item.stack, (st_item) -> st_item.route.path
+
+      continue if !item.AUTO_EXPOSE
+
+      if item.AUTO_EXPOSE?.prefix
+        route = item.AUTO_EXPOSE.prefix
+
+      if item.AUTO_EXPOSE?.public
+        if _.type(item.AUTO_EXPOSE?.public) is 'boolean'
+          for route_item in stack_routes
+            pub_route = route + route_item
+            pub_route = pub_route.split('//').join '/'
+            ___public_routes.push(pub_route) if pub_route !in ___public_routes
+        else if _.type(arr = item.AUTO_EXPOSE?.public) is 'array'
+          for exposed_route in arr
+            pub_route = route + exposed_route
+            pub_route = pub_route.split('//').join '/'
+            ___public_routes.push(pub_route) if pub_route !in ___public_routes
+
+      app.use (route), item
 
       if !process.env.SILENCE
         log.info "APP", "Mounted route: #{route} (#{x})"
 
-  _load_crons = (dir) ->
-    return if !_.exists(dir)
-    for x in ls "#{dir}/*.iced"
-      require("./#{x}")
-
-      if !process.env.SILENCE
-        log.info "APP", "Loaded cron: (#{_.base x})"
-
-  _mount_dir './routes'
+  _mount_routes './routes'
 
   _auto_expose_models = (->
     return if !conf.mongo
@@ -178,7 +191,7 @@ if !conf.cluster or cluster.isWorker
       if opts = model.AUTO_EXPOSE
 
         if !process.env.SILENCE
-          log.info "AUTO_EXPOSE", "Exposing model :#{model_name}", opts
+          log.info "AUTO_EXPOSE", "Exposing model: #{model_name}", opts
 
         bind_entity app, (bind_opts = {
           model: model
@@ -192,7 +205,10 @@ if !conf.cluster or cluster.isWorker
     _auto_expose_models()
   else
     if !process.env.SILENCE
-      log.warn 'APP', "AUTO_EXPOSE", "Model exposure disabled via configuration"
+      log.warn "AUTO_EXPOSE", "Model exposure disabled via configuration"
+
+  if ___public_routes.length and conf.api.auth
+    log.warn "AUTO_EXPOSE", "Exposing #{___public_routes.length} public routes", ___public_routes
 
   app.use (req,res,next) ->
     res.locals.conf = conf

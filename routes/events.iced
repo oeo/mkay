@@ -4,6 +4,12 @@ _ = require('wegweg')({
 
 app = module.exports = new (require 'express').Router
 
-app.get '/custom_event', (req,res,next) ->
+app.get '/public-method', (req,res,next) ->
   res.respond {custom_data:_.uuid()}
+
+##
+app.AUTO_EXPOSE = {
+  prefix: '/events'
+  public: yes
+}
 

@@ -80,6 +80,11 @@ if conf.mongo
 root.pjson = root.package_json =
   JSON.parse _.reads __dirname + '/../package.json'
 
+root.___public_routes = []
+
+if conf.public_routes
+  root.___public_routes = root.___public_routes.concat(conf.public_routes)
+
 process.on 'uncaughtException', (e) ->
   log.error e
 

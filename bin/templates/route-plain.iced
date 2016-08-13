@@ -4,6 +4,12 @@ _ = require('wegweg')({
 
 app = module.exports = new (require 'express').Router
 
-app.get '/', (req,res,next) ->
+app.get '/ping', (req,res,next) ->
   res.respond pong:_.uuid()
+
+##
+app.AUTO_EXPOSE = {
+  prefix: '/'
+  public: no
+}
 

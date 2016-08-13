@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "douglas lauer <taky@taky.com>",
+  "author": "taky@taky.com",
   "repository": "tosadvisor/mkay",
   "dependencies": {
     "basic-auth": "^1.0.4",
