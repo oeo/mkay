@@ -180,7 +180,7 @@ if !conf.cluster or cluster.isWorker
       app.use (route), item
 
       if !process.env.SILENCE
-        log.info "APP", "Mounted route: #{route} (#{x})"
+        log.info "AUTO_EXPOSE", "Mounted route: #{route} (#{x})"
 
   _mount_routes './routes'
 
@@ -212,7 +212,7 @@ if !conf.cluster or cluster.isWorker
       log.warn "AUTO_EXPOSE", "Model exposure disabled via configuration"
 
   if ___public_routes.length and conf.api.auth
-    log.warn "AUTO_EXPOSE", "Exposing #{___public_routes.length} public routes", ___public_routes
+    log.warn "AUTO_EXPOSE", "Exposing #{___public_routes.length} public route(s)", ___public_routes
 
   # underscore routes
   if conf.allow_underscore_routes
