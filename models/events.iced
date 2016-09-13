@@ -18,7 +18,7 @@ EventsSchema = new Schema {
     required: yes
   }
 
-}, {collection:'events'}
+}, {collection:'events',strict:off}
 
 EventsSchema.plugin models.base
 
