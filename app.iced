@@ -105,14 +105,6 @@ if !conf.cluster or cluster.isWorker
     res.locals.conf = conf
     return next()
 
-  if conf.api.auth
-    app.use require('./lib/internal').middleware
-    if !process.env.SILENCE
-      log.info "APP", "Authentication is enabled"
-  else
-    if !process.env.SILENCE
-      log.warn "APP", "Authentication is disabled via configuration"
-
   if conf.cookie_session.enabled
     app.use require('cookie-session')(session_conf = {
       name: (conf.cookie_session.name ? 's')
@@ -165,18 +157,6 @@ if !conf.cluster or cluster.isWorker
       if item.AUTO_EXPOSE?.route
         route = item.AUTO_EXPOSE.route
 
-      if item.AUTO_EXPOSE?.public
-        if _.type(item.AUTO_EXPOSE?.public) is 'boolean'
-          for route_item in stack_routes
-            pub_route = route + route_item
-            pub_route = pub_route.split('//').join '/'
-            ___public_routes.push(pub_route) if pub_route !in ___public_routes
-        else if _.type(arr = item.AUTO_EXPOSE?.public) is 'array'
-          for exposed_route in arr
-            pub_route = route + exposed_route
-            pub_route = pub_route.split('//').join '/'
-            ___public_routes.push(pub_route) if pub_route !in ___public_routes
-
       app.use (route), item
 
       if !process.env.SILENCE
@@ -210,9 +190,6 @@ if !conf.cluster or cluster.isWorker
   else
     if !process.env.SILENCE
       log.warn "AUTO_EXPOSE", "Model exposure disabled via configuration"
-
-  if ___public_routes.length and conf.api.auth
-    log.warn "AUTO_EXPOSE", "Exposing #{___public_routes.length} public route(s)", ___public_routes
 
   # underscore routes
   if conf.allow_underscore_routes

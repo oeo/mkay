@@ -11,7 +11,6 @@ module.exports = conf = {
   # api
   api: {
     port: 10001
-    auth: 'hello_world'
   }
 
   cookie_session: {

@@ -1,37 +1,38 @@
-<p align="xcenter">
-  <img src="https://taky.s3.amazonaws.com/41h59xjd1rkk.png" width="250">
+<p>
+  <img src="https://taky.s3.amazonaws.com/21jz8qs25ywl.png" width="250">
 </p>
 
 # mkay
 `mkay` is a framework that that allows you to develop complex backends quickly
 by centralizing the bulk of your work inside of models and libraries.
 
-it generates a large amount and can automatically expose mostly everything
-else without you having to do much. the theory behind it is that you spend
-very little time worrying about convention and schematics and the most amount
-of time possible writing "meat".
-
 # glancing
 - iced/express/mongoose/winston
 - mongodb/redis/memcached
-- cluster supported
+- cluster support
 - generate everything, produce complex apis rapidly
   - chmod +x bin generators for all significant application files (models,
     crons, routes) in respective folders
 - output middleware (`res.respond()`)
-  - json/jsonp/pretty (`?format=json&pretty=1`)
+  - json/pretty (`?format=json&pretty=1`)
+  - jsonp
   - xml
-- http auth middleware
 - crud/rest doesn't need to be generated, it's just exposed via model export
   - method override allows for easy testing using the browser (`?method=post`)
   - coffeescript json query filters and sort selectors
-  - lean queries/field selection
+  - lean queries and field selection
   - pagination (`?per_page=&cur_page=`)
 - flexible
   - add custom routes
   - append auto-exposed model crud routes, make cache layers over mongo,
     whatever
-  - configure which models/methods/statics you want exposed
+  - configure which models/methods/statics you want exposed and which path
+    prefixes you want to use
+- automatic recognize existence of `./static` and exposes it using
+  `express-static`
+- automatic recognize existence of `./views/*.hbs` and configures `res.render`
+  with `swag.js` and other custom helper methods (`./lib/hbs_helpers`)
+- cookie-sessions baked, togglable with configuration file
 
 # quick start
 
@@ -52,9 +53,14 @@ cd ./models
 ./_create --name friends > friends.iced
 ```
 
+now you have a rest api and don't have to write routes that wrap the model
+methods, the methods can just be exposed directly.
+
 - crud is automatically exposed if `model.AUTO_EXPOSE` is exported
 - expose instance methods using `model.AUTO_EXPOSE.methods=[]`
 - expose static methods using `model.AUTO_EXPOSE.statics=[]`
+- select the path by setting `model.AUTO_EXPOSE.route`, otherwise it will use
+  the filename
 
 ### create a new "friend"
 
@@ -86,6 +92,7 @@ model.AUTO_EXPOSE = {
   methods: [
     'change_name'
   ]
+  statics: []
 }
 ```
 
