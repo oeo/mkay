@@ -5,10 +5,10 @@ _ = require('wegweg')({
 if !module.parent
   process.env.MONGOOSE_MODEL_DEVEL = module.filename
   process.env.SILENCE = 1
-  require './../lib/globals'
+  require './../core/globals'
 
 Schema = mongoose.Schema
-models = require './../lib/models'
+models = require './../core/models'
 
 EventsSchema = new Schema {
 

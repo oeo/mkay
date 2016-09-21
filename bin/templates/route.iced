@@ -2,7 +2,7 @@ _ = require('wegweg')({
   globals: off
 })
 
-pagination = require './../lib/pagination'
+pagination = require './../core/pagination'
 
 app = module.exports = new (require 'express').Router
 

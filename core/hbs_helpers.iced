@@ -23,6 +23,10 @@ helpers.load = ((url) ->
 
 cache_block_helper = ((prefix,helper) ->
   (args...) =>
+
+    # disable cache
+    return result = helper(args...)
+
     input = args[0]?.fn(this)
     if cached = cache.get("#{prefix}:#{input}")
       cached

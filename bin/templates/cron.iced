@@ -4,7 +4,7 @@ _ = require('wegweg')({
 
 if !module.parent
   process.env.SILENCE = 1
-  require './../lib/globals'
+  require './../core/globals'
 
 module.exports = routine = {
   run: ((cb) ->

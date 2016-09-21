@@ -8,11 +8,11 @@ cluster = require 'cluster'
 if cluster.isWorker
   process.env.SILENCE = 1
 
-require './lib/globals'
-require './lib/listeners'
+require './core/globals'
+require './core/listeners'
 
 if !conf.cluster or cluster.isMaster
-  require './lib/startup'
+  require './core/startup'
 
   _load_crons = (dir) ->
     return if !_.exists(dir)
@@ -86,20 +86,20 @@ if !conf.cluster or cluster.isWorker
       return next()
     )
 
-  app.use (require './lib/api_response').middleware
+  app.use (require './core/api_response').middleware
 
   if conf.developer.show_error_stack
     if !process.env.SILENCE
       log.warn 'APP', 'DEVELOPER', "Error stack is exposed in browser via configuration"
 
-  app.use (require './lib/metadata').middleware
+  app.use (require './core/metadata').middleware
 
-  coffee_query = require './lib/coffee_query'
+  coffee_query = require './core/coffee_query'
 
   app.use coffee_query.parse_extra_filters
   app.use coffee_query.middleware
 
-  app.use (require './lib/request_logging').middleware
+  app.use (require './core/request_logging').middleware
 
   app.use (req,res,next) ->
     res.locals.conf = conf
@@ -125,7 +125,7 @@ if !conf.cluster or cluster.isWorker
       layout: no
       extname: '.hbs'
       partialsDir: dir
-      helpers: require('./lib/hbs_helpers')
+      helpers: require('./core/hbs_helpers')
     }))
 
     app.set('view engine','hbs')
@@ -167,7 +167,7 @@ if !conf.cluster or cluster.isWorker
   _auto_expose_models = (->
     return if !conf.mongo
 
-    bind_entity = require './lib/auto_expose'
+    bind_entity = require './core/auto_expose'
 
     for model_name in mongoose.modelNames()
       model = mongoose.model(model_name)
@@ -197,7 +197,7 @@ if !conf.cluster or cluster.isWorker
       res.respond {pong:_.uuid()}
 
     app.get '/_/stats', (req,res,next) ->
-      res.respond (require './lib/request_logging').stats()
+      res.respond (require './core/request_logging').stats()
 
     if !process.env.SILENCE
       log.warn 'APP', 'Underscore routes enabled'

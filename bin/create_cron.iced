@@ -2,7 +2,7 @@ _ = require('wegweg')({
   globals: off
 })
 
-macros = require __dirname + '/../lib/macros'
+macros = require __dirname + '/../core/macros'
 
 generator = {}
 
