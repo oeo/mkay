@@ -212,11 +212,11 @@ if !conf.cluster or cluster.isWorker
 
   if cluster.isWorker
     if !process.env.SILENCE
-      log.info "APP", "WORKER", "Listening :#{conf.api.port}"
+      log.info "APP", "WORKER", "Listening :#{conf.port}"
   else
     if !process.env.SILENCE
-      log.info "APP", "Listening :#{conf.api.port}"
+      log.info "APP", "Listening :#{conf.port}"
 
   ##
-  app.listen conf.api.port
+  app.listen conf.port
 
