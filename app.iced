@@ -150,7 +150,6 @@ if !conf.cluster or cluster.isWorker
       route = '/' if _.base(x).startsWith('_')
 
       item = require("./#{x}")
-      stack_routes = _.ucmap item.stack, (st_item) -> st_item.route.path
 
       continue if !item.AUTO_EXPOSE
 
