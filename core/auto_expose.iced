@@ -116,7 +116,7 @@ module.exports = bind_entity = ((app,opt={}) ->
     data.pages = pagination {
       total: data.total
       cur_page: (parseInt req.query.page ? 0)
-      per_page: (parseInt req.query.per_page ? 50)
+      per_page: (parseInt req.query.per_page ? 100)
       arrow_mode: yes
     }
 
@@ -125,7 +125,7 @@ module.exports = bind_entity = ((app,opt={}) ->
         .find req.coffee_filter ? {}
         .sort req.coffee_filter_sort ? {ctime:-1}
         .skip data.pages.offset
-        .limit (parseInt req.query.per_page ? 50)
+        .limit (parseInt req.query.per_page ? 100)
         .lean()
         .exec defer e,data.items
     return next e if e
