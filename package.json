@@ -1,7 +1,7 @@
 {
   "name": "mkay",
-  "version": "1.9.0",
-  "description": "a backend framework based on pragmatism and not convention",
+  "version": "1.9.1",
+  "description": "a framework based on pragmatism",
   "main": "app.iced",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
