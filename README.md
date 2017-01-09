@@ -1,5 +1,5 @@
-<p align="center">
-  <img src="https://taky.s3.amazonaws.com/61ncjtxple84.png" width="325">
+<p xalign="center">
+  <img src="https://taky.s3.amazonaws.com/51ncjzlc868u.png" width="275">
 </p>
 
 `mkay` is a framework that that allows you to develop complex backends quickly
