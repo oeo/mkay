@@ -1,10 +1,11 @@
-<p>
-  <img src="https://taky.s3.amazonaws.com/01ncj8vh0p4f.png" width="200">
+<p align="center">
+  <img src="https://taky.s3.amazonaws.com/81ncjjel7ko2.png" width="200">
 </p>
 
-# mkay
 `mkay` is a framework that that allows you to develop complex backends quickly
 by centralizing the bulk of your work inside of models and libraries.
+
+---
 
 # glancing
 - iced/express/mongoose/winston
