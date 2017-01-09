@@ -22,7 +22,7 @@ by centralizing the bulk of your work inside of models and libraries.
   - method override allows for easy testing using the browser (`?method=post`)
   - coffeescript json query filters and sort selectors
   - lean queries and field selection
-  - pagination (`?per_page=&cur_page=`)
+  - pagination (`?limit=&page=`)
 - flexible
   - add custom routes
   - append auto-exposed model crud routes, make cache layers over mongo,
@@ -33,7 +33,7 @@ by centralizing the bulk of your work inside of models and libraries.
   `express-static`
 - automatic recognize existence of `./views/*.hbs` and configures `res.render`
   with `swag.js` and other custom helper methods (`./lib/hbs_helpers`)
-- cookie-sessions baked, togglable with configuration file
+- cookie-sessions baked, togglable with config option
 
 # quick start
 
