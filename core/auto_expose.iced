@@ -65,6 +65,7 @@ module.exports = bind_entity = ((app,opt={}) ->
   router.get '/:_id', (req,res,next) ->
     await model
       .findOne({_id:req.params._id})
+      .populate(req.query.populate ? '')
       .lean()
       .exec defer e,item
 
@@ -125,6 +126,7 @@ module.exports = bind_entity = ((app,opt={}) ->
         .find req.coffee_filter ? {}
         .sort req.coffee_filter_sort ? {ctime:-1}
         .skip data.pages.offset
+        .populate(req.query.populate ? '')
         .limit (parseInt req.query.per_page ? req.query.limit ? 100)
         .lean()
         .exec defer e,data.items
