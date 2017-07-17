@@ -1,5 +1,5 @@
-<p align="left">
-  <img src="https://taky.s3.amazonaws.com/91t51ba7fbkp.svg" width="200">
+<p align="center">
+  <img src="https://taky.s3.amazonaws.com/21t51djqiwg1.svg" width="200">
 </p>
 <br>
 
