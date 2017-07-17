@@ -1,7 +1,6 @@
 <p align="center">
   <img src="https://taky.s3.amazonaws.com/21t51djqiwg1.svg" width="200">
 </p>
-<br>
 
 `mkay` is a framework that that allows you to develop complex backends quickly
 by centralizing the bulk of your work inside of models and libraries.
