@@ -80,7 +80,7 @@ methods, the methods can just be exposed directly.
 - update one `/friends/:_id/?method=post&name=James`
 - remove one `/friends/:_id/?method=delete`
 
-<p align="center">
+<p>
   <img src="https://taky.s3.amazonaws.com/LSx4HjgHLFoxfnavUz3F4W.png" width="235">
 </p>
 
