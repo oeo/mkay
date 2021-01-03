@@ -12,6 +12,15 @@
 by centralizing the bulk of your work inside of models and libraries and generating
 everything it can for you.
 
+## prod ready!
+- deployed in sls on my professional projects, very high scale (10k+req/s)
+- even without lambda or horizontal distribution, a single instance can handle a
+  considerable amount of traffic depending on the box specs (running pm2 is probably
+  the best for single-instance deployments)
+- has served as the backbone to a custom ecom platform processing over 1m$ sales/daily
+  - not only processing orders and subscriptions but also recording and analyzing all
+    traffic analytics
+
 ## features
 - node (iced)/express/mongoose
 - supported persistence and cache through
