@@ -3,6 +3,9 @@ _ = require('wegweg')({
   shelljs: on
 })
 
+if !root
+  if global? then root = global
+
 root.log = require './logger'
 
 root.ll = (x...) -> console.log x...
