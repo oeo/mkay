@@ -58,7 +58,22 @@ root.eve = _.eve()
 
 if conf.mongo
   root.mongoose = require 'mongoose'
-  mongoose.connect db.uri
+
+  conn_str = (do =>
+    obj = _.parse_uri(uri = conf.mongo)
+    if uri.match '@'
+      up = uri.split('@')[0] + '@'
+    else
+      up = ''
+    database = uri.split('/').pop()
+
+    return "mongodb://#{up}#{obj.hostname}:#{obj.port or 27017}#{'/' + database or ''}"
+  )
+
+  mongoose.connect conn_str, {
+    useNewUrlParser: yes
+    useUnifiedTopology: yes
+  }
 
   for x in ls "#{__dirname}/../models/*.iced"
     if process.env.MONGOOSE_MODEL_DEVEL
