@@ -46,7 +46,9 @@ yarn
 yarn dev
 ```
 
-<img src="https://taky.s3.amazonaws.com/jJuWQEiDvNBcE73RWA3HgW.png" width="742">
+<p align="center">
+  <img src="https://taky.s3.amazonaws.com/jJuWQEiDvNBcE73RWA3HgW.png" width="742">
+</p>
 
 ### @howto: generate a model
 
