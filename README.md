@@ -155,7 +155,7 @@ and runs the instance method, returning the result to the browser
 
 ---
 
-you may contact me at taky@taky.com
+contact me: taky@taky.com
 
 ```
 License: MIT
