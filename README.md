@@ -74,10 +74,15 @@ methods, the methods can just be exposed directly.
 
 - list
   - `/friends`
-  - `/friends?per_page=50&offset=0`
+  - w/ pagination options `/friends?per_page=50&offset=0`
+  - w/ mongodb query `/friends?filter.1={name:"John"}`
 - view one `/friends/:_id`
-- update `/friends/:_id/?method=post&name=James`
-- remove `/friends/:_id/?method=delete`
+- update one `/friends/:_id/?method=post&name=James`
+- remove one `/friends/:_id/?method=delete`
+
+<p align="center">
+  <img src="https://taky.s3.amazonaws.com/LSx4HjgHLFoxfnavUz3F4W.png" width="235">
+</p>
 
 ### how to: create/expose a model instance method
 
