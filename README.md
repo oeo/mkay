@@ -156,7 +156,7 @@ and runs the instance method, returning the result to the browser
 ---
 
 ```
-contact me directly: taky@taky.com
+contact me at taky@taky.com
 ```
 
 ```
