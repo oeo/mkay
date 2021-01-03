@@ -50,7 +50,7 @@ yarn dev
   <img src="https://taky.s3.amazonaws.com/jJuWQEiDvNBcE73RWA3HgW.png" width="742">
 </p>
 
-### @howto: generate a model
+### how to: generate a model
 
 ```bash
 cd ./models
@@ -66,7 +66,7 @@ methods, the methods can just be exposed directly.
 - select the path by setting `model.AUTO_EXPOSE.route`, otherwise it will use
   the filename
 
-### @howto: create a new "friend"
+### how to: create a new "friend"
 
 `http://localhost:10001/friends?method=post&name=John`
 
@@ -75,7 +75,7 @@ methods, the methods can just be exposed directly.
 - edit `/friends/:_id/?method=post&name=James`
 - delete `/friends/:_id/?method=delete`
 
-### @howto: create/expose a model instance method
+### how to: create/expose a model instance method
 
 add a method to `FriendsSchema`- auto-exposed methods must always
 take an object as the first parameter and a callback as the second
@@ -104,8 +104,6 @@ now run it through the browser, it converts `req.query` into `opt`, runs the
 method and returns the result to the browser
 
 `http://localhost:10001/friends/:_id/change_name?method=post&name=Jose`
-
----
 
 ## global ns pollutants
 - `db` mongojs instance
