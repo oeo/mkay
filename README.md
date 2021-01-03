@@ -70,10 +70,14 @@ methods, the methods can just be exposed directly.
 
 `http://localhost:10001/friends?method=post&name=John`
 
-- list `/friends`
-- view `/friends/:_id`
-- edit `/friends/:_id/?method=post&name=James`
-- delete `/friends/:_id/?method=delete`
+#### generated crud
+
+- list
+  - `/friends`
+  - `/friends?per_page=50&offset=0`
+- view one `/friends/:_id`
+- update `/friends/:_id/?method=post&name=James`
+- remove `/friends/:_id/?method=delete`
 
 ### how to: create/expose a model instance method
 
@@ -100,8 +104,8 @@ model.AUTO_EXPOSE = {
 }
 ```
 
-now run it through the browser, it converts `req.query` into `opt`, runs the
-method and returns the result to the browser
+now run it through the browser like this. it converts `req.query` (or `req.body`) into `opt`
+and runs the instance method, returning the result to the browser
 
 `http://localhost:10001/friends/:_id/change_name?method=post&name=Jose`
 
