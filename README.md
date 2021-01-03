@@ -105,7 +105,7 @@ method and returns the result to the browser
 
 ---
 
-### global ns pollutants
+## global ns pollutants
 - `db` mongojs instance
 - `db.<Model>` (mongoose models loaded into `db`)
 - `redis` ioredis instance
@@ -116,7 +116,7 @@ method and returns the result to the browser
 - `ll` alias for console.log
 - `lp` alias for console.log pretty print (`JSON.stringify obj, null, 2`)
 
-### auto-loaded
+## auto-loaded
 - models located in `./models`
 - routes located in `./routes` are loaded using the base file name minus the
   extension as the path prefix
@@ -126,14 +126,14 @@ method and returns the result to the browser
 - if `./static` exists it is automatically served using express' static
   middleware
 
-### command line generators
+## command line generators
 - `./crons/_create`
 - `./models/_create`
 - `./routes/_create`
 
 ---
 
-### License: MIT
+#### License: MIT
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
