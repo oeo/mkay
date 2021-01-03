@@ -42,11 +42,11 @@ by centralizing the bulk of your work inside of models and libraries.
 git clone https://github.com/tosadvisor/mkay
 cd ./mkay
 sudo npm i -g iced-coffee-script nodemon
-npm i
-iced app.iced
+yarn
+yarn dev
 ```
 
-<img src="https://taky.s3.amazonaws.com/81hnpkj7468m.png" width="2046">
+<img src="https://taky.s3.amazonaws.com/jJuWQEiDvNBcE73RWA3HgW.png" width="742">
 
 ### @howto: generate a model
 
