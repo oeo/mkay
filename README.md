@@ -1,11 +1,13 @@
 ```javascript
-/*       ,'/
+/*
+         ,'/
        ,' /
      ,'  /_____,
-   .'____    ,'    mkay
-        /  ,'      an m/(v)/(route) framework
+   .'____    ,'    "mkay"
+        /  ,'      an opinionated m/v/route api framework for rapid development
        / ,'
-      /,' */
+      /,'
+*/
 ```
 
 `mkay` is a framework that that allows you to develop complex backends quickly
