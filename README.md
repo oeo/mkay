@@ -41,7 +41,7 @@ by centralizing the bulk of your work inside of models and libraries.
 ```bash
 git clone https://github.com/tosadvisor/mkay
 cd ./mkay
-sudo npm i -g iced-coffee-script nodemon
+sudo npm i -g iced-coffee-script nodemon yarn
 yarn
 yarn dev
 ```
