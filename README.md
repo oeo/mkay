@@ -11,9 +11,7 @@
 `mkay` is a framework that that allows you to develop complex backends quickly
 by centralizing the bulk of your work inside of models and libraries.
 
----
-
-## glancing
+## at a glance
 - iced/express/mongoose/winston
 - mongodb/redis/memcached
 - generate everything, produce complex apis rapidly
