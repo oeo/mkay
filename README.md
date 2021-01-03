@@ -1,11 +1,11 @@
-```
-         ,'/
+```javascript
+/*       ,'/
        ,' /
      ,'  /_____,
    .'____    ,'    mkay
         /  ,'      an m/(v)/(route) framework
        / ,'
-      /,'
+      /,' */
 ```
 
 `mkay` is a framework that that allows you to develop complex backends quickly
