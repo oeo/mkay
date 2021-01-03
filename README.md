@@ -1,16 +1,21 @@
-<p align="center">
-  <img src="https://taky.s3.amazonaws.com/21t51djqiwg1.svg" width="200">
-</p>
+```
+         ,'/
+       ,' /
+     ,'  /_____,
+   .'____    ,'    mkay
+        /  ,'      an m/(v)/(route) framework
+       / ,'
+      /,'
+```
 
 `mkay` is a framework that that allows you to develop complex backends quickly
 by centralizing the bulk of your work inside of models and libraries.
 
 ---
 
-# glancing
+## glancing
 - iced/express/mongoose/winston
 - mongodb/redis/memcached
-- cluster support
 - generate everything, produce complex apis rapidly
   - chmod +x bin generators for all significant application files (models,
     crons, routes) in respective folders
@@ -24,9 +29,7 @@ by centralizing the bulk of your work inside of models and libraries.
   - lean queries and field selection
   - pagination (`?limit=&page=`)
 - flexible
-  - add custom routes
-  - append auto-exposed model crud routes, make cache layers over mongo,
-    whatever
+  - easily add custom routes
   - configure which models/methods/statics you want exposed and which path
     prefixes you want to use
 - automatic recognize existence of `./static` and exposes it using
@@ -35,19 +38,19 @@ by centralizing the bulk of your work inside of models and libraries.
   with `swag.js` and other custom helper methods (`./lib/hbs_helpers`)
 - cookie-sessions baked, togglable with config option
 
-# quick start
+## quick start
 
 ```bash
 git clone https://github.com/tosadvisor/mkay
 cd ./mkay
-sudo npm i -g iced-coffee-script
+sudo npm i -g iced-coffee-script nodemon
 npm i
 iced app.iced
 ```
 
 <img src="https://taky.s3.amazonaws.com/81hnpkj7468m.png" width="2046">
 
-### generate a model
+### @howto: generate a model
 
 ```bash
 cd ./models
@@ -63,7 +66,7 @@ methods, the methods can just be exposed directly.
 - select the path by setting `model.AUTO_EXPOSE.route`, otherwise it will use
   the filename
 
-### create a new "friend"
+### @howto: create a new "friend"
 
 `http://localhost:10001/friends?method=post&name=John`
 
@@ -72,7 +75,7 @@ methods, the methods can just be exposed directly.
 - edit `/friends/:_id/?method=post&name=James`
 - delete `/friends/:_id/?method=delete`
 
-### create/expose a model instance method
+### @howto: create/expose a model instance method
 
 add a method to `FriendsSchema`- auto-exposed methods must always
 take an object as the first parameter and a callback as the second
@@ -104,7 +107,7 @@ method and returns the result to the browser
 
 ---
 
-# global ns pollutants
+### global ns pollutants
 - `db` mongojs instance
 - `db.<Model>` (mongoose models loaded into `db`)
 - `redis` ioredis instance
@@ -115,17 +118,17 @@ method and returns the result to the browser
 - `ll` alias for console.log
 - `lp` alias for console.log pretty print (`JSON.stringify obj, null, 2`)
 
-# auto-loaded
+### auto-loaded
 - models located in `./models`
 - routes located in `./routes` are loaded using the base file name minus the
   extension as the path prefix
 - files in `./cron` are automatically `required`, a bare-bones generator is
   provided
-- if `./views` exists `.hbs` files are renderable via `res.render()`
+- if `./views` exists `.hbs` files are renderable via `res.render()` in custom routes
 - if `./static` exists it is automatically served using express' static
   middleware
 
-# chmod +x generators
+### command line generators
 - `./crons/_create`
 - `./models/_create`
 - `./routes/_create`

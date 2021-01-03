@@ -18,13 +18,13 @@ process.env.CONFIG_FILE_LOCAL ?= require('path').dirname(process.env.CONFIG_FILE
 process.env.CONFIG_FILE_LOCAL = _.resolve process.env.CONFIG_FILE_LOCAL
 
 if !process.env.SILENCE
-  log.info "GLOBALS", "Loading config CONFIG_FILE: #{process.env.CONFIG_FILE}"
+  log.info "GLOBALS", "Using config #{process.env.CONFIG_FILE}"
 
 config = require process.env.CONFIG_FILE
 
 if _.exists(process.env.CONFIG_FILE_LOCAL)
   if !process.env.SILENCE
-    log.info "GLOBALS", "Merging local config CONFIG_FILE_LOCAL: #{process.env.CONFIG_FILE_LOCAL}"
+    log.info "GLOBALS", "Merging local config #{process.env.CONFIG_FILE_LOCAL}"
 
   flatten = require 'flat'
   unflatten = require('flat').unflatten

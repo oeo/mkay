@@ -23,7 +23,7 @@ module.exports = bind_entity = ((app,opt={}) ->
 
       do (x) =>
         if !process.env.SILENCE
-          log.info "AUTO_EXPOSE", "Binding model instance method `#{model.modelName}/#{x}()` to `POST #{opt.route}/:_id/#{x}`"
+          log.info "AUTO_EXPOSE", "Binding instance method `#{model.modelName}/#{x}()` to `POST #{opt.route}/:_id/#{x}`"
 
         router.post "/:_id/#{x}", (req,res,next) ->
           await model
@@ -45,7 +45,7 @@ module.exports = bind_entity = ((app,opt={}) ->
 
       do (x) =>
         if !process.env.SILENCE
-          log.info "AUTO_EXPOSE", "Binding model static method `#{model.modelName}/#{x}()` to `POST #{opt.route}/#{x}`"
+          log.info "AUTO_EXPOSE", "Binding static method `#{model.modelName}/#{x}()` to `POST #{opt.route}/#{x}`"
 
         router.post "/#{x}", (req,res,next) ->
           await model[x] req.body, defer e,r
@@ -53,7 +53,7 @@ module.exports = bind_entity = ((app,opt={}) ->
           return res.respond r
 
   if !process.env.SILENCE
-    log.info "AUTO_EXPOSE", "Binding crud routes for `#{model.modelName}` to `#{opt.route}`"
+    log.info "AUTO_EXPOSE", "Binding CRUD for `#{model.modelName}` to `#{opt.route}`"
 
   # bind create
   router.post '/', (req,res,next) ->

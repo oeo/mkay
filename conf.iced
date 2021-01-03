@@ -1,5 +1,4 @@
 module.exports = conf = {
-  cluster: off
   port: 10001
 
   mongo: 'localhost/mkay-api'
