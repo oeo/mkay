@@ -9,11 +9,16 @@
 ```
 
 `mkay` is a framework that that allows you to develop complex backends quickly
-by centralizing the bulk of your work inside of models and libraries.
+by centralizing the bulk of your work inside of models and libraries and generating
+everything it can for you.
 
-## at a glance
-- iced/express/mongoose/winston
-- mongodb/redis/memcached
+## features
+- node (iced)/express/mongoose
+- supported persistence and cache through
+  - mongodb
+  - redis
+  - memcached
+- sls friendly
 - generate everything, produce complex apis rapidly
   - chmod +x bin generators for all significant application files (models,
     crons, routes) in respective folders
@@ -24,8 +29,7 @@ by centralizing the bulk of your work inside of models and libraries.
 - crud/rest doesn't need to be generated, it's just exposed via model export
   - method override allows for easy testing using the browser (`?method=post`)
   - coffeescript json query filters and sort selectors
-  - lean queries and field selection
-  - pagination (`?limit=&page=`)
+  - lean queries, field selection, reference population and pagination
 - flexible
   - easily add custom routes
   - configure which models/methods/statics you want exposed and which path
@@ -34,7 +38,7 @@ by centralizing the bulk of your work inside of models and libraries.
   `express-static`
 - automatic recognize existence of `./views/*.hbs` and configures `res.render`
   with `swag.js` and other custom helper methods (`./lib/hbs_helpers`)
-- cookie-sessions baked, togglable with config option
+- cookie-sessions baked in, togglable with config option
 
 ## quick start
 
