@@ -3,7 +3,7 @@
        ,' /
      ,'  /_____,
    .'____    ,'    "mkay"
-        /  ,'      an opinionated m/v/route api framework for rapid development
+        /  ,'      the m/v/route api framework for dev speed
        / ,'
       /,'
 ```
