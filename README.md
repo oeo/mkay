@@ -158,7 +158,7 @@ and runs the instance method, returning the result to the browser
 contact me directly: taky@taky.com
 
 ```
-#### License: MIT
+License: MIT
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
