@@ -12,7 +12,7 @@
 by centralizing the bulk of your work inside of models and libraries and generating
 everything it can for you.
 
-## prod ready!
+## production ready
 - deployed in sls on my professional projects, very high scale (10k+req/s)
 - even without lambda or horizontal distribution, a single instance can handle a
   considerable amount of traffic depending on the box specs (running pm2 is probably
