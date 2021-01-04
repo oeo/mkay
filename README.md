@@ -18,7 +18,7 @@ everything it can for you.
   considerable amount of traffic depending on the box specs (running pm2 is probably
   the best for single-instance deployments)
 - has served as the backbone to a custom ecom platform processing over 1m$ sales/daily
-  - not only processing orders and subscriptions but also recording and analyzing all
+  - not only processing orders and subscriptions but also recording and aggregating all
     traffic analytics
 
 ## features
