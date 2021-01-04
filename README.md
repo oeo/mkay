@@ -87,7 +87,7 @@ methods, the methods can just be exposed directly.
 
 - list
   - `/friends`
-  - w/ pagination options `/friends?per_page=50&offset=0`
+  - w/ pagination options `/friends?per_page=50&page=0`
   - w/ mongodb query `/friends?filter.1={name:"John"}`
 - view one `/friends/:_id`
 - update one `/friends/:_id/?method=post&name=James`
