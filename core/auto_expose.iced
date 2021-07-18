@@ -100,7 +100,7 @@ module.exports = bind_entity = ((app,opt={}) ->
     if !item then return next new Error 'Document not found'
 
     await item.remove defer e,r
-    if e then return cb e
+    if e then return next e
 
     return res.respond r
 
