@@ -1,3 +1,10 @@
+config = (dotenv = require('dotenv').config({
+  path: (process.env.ENVFILE or (__dirname + '/../.env'))
+})).parsed
+
+for k,v of config
+  config[lk] = v if !config[lk = k.toLowerCase()]
+
 _ = require('wegweg')({
   globals: on
   shelljs: on
@@ -6,52 +13,24 @@ _ = require('wegweg')({
 if !root
   if global? then root = global
 
+root.conf = root.config = config
+
 root.log = require './logger'
 
-root.ll = (x...) -> console.log x...
-root.lp = (x) -> ll JSON.stringify(x,null,2)
-
-process.env.CONFIG_FILE ?= __dirname + '/../conf'
-process.env.CONFIG_FILE = _.resolve process.env.CONFIG_FILE
-
-process.env.CONFIG_FILE_LOCAL ?= require('path').dirname(process.env.CONFIG_FILE) + '/conf.local.iced'
-process.env.CONFIG_FILE_LOCAL = _.resolve process.env.CONFIG_FILE_LOCAL
-
-if !process.env.SILENCE
-  log.info "GLOBALS", "Using config #{process.env.CONFIG_FILE}"
-
-config = require process.env.CONFIG_FILE
-
-if _.exists(process.env.CONFIG_FILE_LOCAL)
-  if !process.env.SILENCE
-    log.info "GLOBALS", "Merging local config #{process.env.CONFIG_FILE_LOCAL}"
-
-  flatten = require 'flat'
-  unflatten = require('flat').unflatten
-
-  flat_extra = flatten require(process.env.CONFIG_FILE_LOCAL)
-  flat_conf = flatten config
-
-  flat_conf[k] = v for k,v of flat_extra
-
-  config = unflatten flat_conf
-
-root.conf = config
-
 if conf.mongo
-  if !process.env.SILENCE
-    log.info "GLOBALS", "Connecting MongoDB (#{conf.mongo})"
+  if !env.SILENCE
+    log.info "GLOBALS", "Mongo (#{conf.mongo})"
   root.db = root.mongo = _.mongo conf.mongo
   root.col = (x) -> db.collection x
 
 if conf.redis
-  if !process.env.SILENCE
-    log.info "GLOBALS", "Connecting Redis (#{conf.redis})"
+  if !env.SILENCE
+    log.info "GLOBALS", "Redis (#{conf.redis})"
   root.redis = _.redis conf.redis
 
 if conf.memcached
   if !process.env.SILENCE
-    log.info "GLOBALS", "Connecting Memcached (#{conf.memcached})"
+    log.info "GLOBALS", "Memcached (#{conf.memcached})"
   root.memcached = _.memcached conf.memcached
 
 root.eve = _.eve()
@@ -76,9 +55,9 @@ if conf.mongo
   }
 
   for x in ls "#{__dirname}/../models/*.iced"
-    if process.env.MONGOOSE_MODEL_DEVEL
-      if _.base(process.env.MONGOOSE_MODEL_DEVEL) is (base = _.base(x))
-        if !process.env.SILENCE
+    if env.MONGOOSE_MODEL_DEVEL
+      if _.base(env.MONGOOSE_MODEL_DEVEL) is (base = _.base(x))
+        if !env.SILENCE
           log.warn "GLOBALS", "Skipping model #{base} (env.MONGOOSE_MODEL_DEVEL)"
         continue
     require x

@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 _ = require('wegweg')({
   globals: on
   shelljs: on
@@ -32,15 +34,15 @@ app.use ((req,res,next) ->
   for x in needles
     if req.real_ip.includes(x)
       req.real_ip = '127.0.0.1'
-      req.real_ip = ip if ip = conf.developer.debug_ip
+      req.real_ip = ip if ip = env.DEVELOPER_DEBUG_IP
       break
 
   return next()
 )
 
 # allow method override
-if conf.allow_http_method_override
-  if !process.env.SILENCE
+if env.ALLOW_HTTP_METHOD_OVERRIDE
+  if !env.SILENCE
     log.warn "APP", 'Allowing HTTP method override using `req.query` (`?method=post`)'
 
   app.use ((req,res,next) ->
@@ -64,8 +66,8 @@ if conf.allow_http_method_override
 
 app.use (require './core/api_response').middleware
 
-if conf.developer.show_error_stack
-  if !process.env.SILENCE
+if env.DEVELOPER_ERROR_STACK
+  if !env.SILENCE
     log.warn 'APP', 'DEVELOPER', "Error stack is exposed via configuration"
 
 app.use (require './core/metadata').middleware
@@ -81,19 +83,6 @@ app.use (req,res,next) ->
   res.locals.conf = conf
   return next()
 
-if conf.cookie_session.enabled
-  app.use require('cookie-session')(session_conf = {
-    name: (conf.cookie_session.name ? 's')
-    secret: conf.cookie_session.secret_key
-  })
-
-  app.use (req,res,next) ->
-    res.locals.session = req.session
-    return next()
-
-  if !process.env.SILENCE
-    log.info 'APP', "Cookie session enabled: #{session_conf.name}/#{session_conf.secret}"
-
 if _.exists(dir = __dirname + '/views')
   exphbs  = require('express-handlebars')
 
@@ -106,13 +95,13 @@ if _.exists(dir = __dirname + '/views')
 
   app.set('view engine','hbs')
 
-  if !process.env.SILENCE
+  if !env.SILENCE
     log.info "APP", "Adding Handlebars render engine: views/*.hbs"
 
 if _.exists(dir = __dirname + '/static')
   app.use('/static',require('express').static('static'))
 
-  if !process.env.SILENCE
+  if !env.SILENCE
     log.info "APP", "Serving static assets: static/*: /static"
 
 _mount_routes = (dir,prefix=null) ->
@@ -149,7 +138,7 @@ _auto_expose_models = (->
 
     if opts = model.AUTO_EXPOSE
 
-      if !process.env.SILENCE
+      if !env.SILENCE
         log.info "AUTO_EXPOSE", "Exposing model: #{model_name}", opts
 
       bind_entity app, (bind_opts = {
