@@ -13,7 +13,7 @@ by centralizing the bulk of your work inside of models and libraries and generat
 everything it can for you.
 
 ## production ready
-- deployed in sls on my professional projects, very high scale (10k+req/s)
+- deployed in sls on projects at very high scale (10k+req/s)
 - even without lambda or horizontal distribution, a single instance can handle a
   considerable amount of traffic depending on the box specs (running pm2 is probably
   the best for single-instance deployments)
@@ -52,7 +52,7 @@ everything it can for you.
 ## quick start
 
 ```bash
-git clone https://github.com/tosadvisor/mkay
+git clone https://github.com/GENESISHASH/mkay
 cd ./mkay
 sudo npm i -g iced-coffee-script nodemon yarn
 yarn
@@ -132,11 +132,9 @@ and runs the instance method, returning the result to the browser
 - `db.<Model>` (mongoose models loaded into `db`)
 - `redis` ioredis instance
 - `memcached` node-memcached instance
-- `conf` configuration object
+- `conf` configuration object (.env parse)
 - `eve` eventemitter2 instance
 - `log` winston instance
-- `ll` alias for console.log
-- `lp` alias for console.log pretty print (`JSON.stringify obj, null, 2`)
 
 ## auto-loaded
 - models located in `./models`
@@ -152,6 +150,11 @@ and runs the instance method, returning the result to the browser
 - `./crons/_create`
 - `./models/_create`
 - `./routes/_create`
+
+## @todo
+- [ ] remove vulns alerts from `wegweg` dep
+- [ ] remove cacheloop logic(s)
+- [ ] add static api key in env w/ option for injectable middleware fns
 
 ---
 
