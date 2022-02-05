@@ -152,9 +152,11 @@ and runs the instance method, returning the result to the browser
 - `./routes/_create`
 
 ## @todo
-- [ ] remove vulns alerts from `wegweg` dep
-- [ ] remove cacheloop logic(s)
-- [ ] add static api key in env w/ option for injectable middleware fns
+- [ ] address vulns alerts from `wegweg` dep
+- basically rework assumptive api authentication in `./core/internal.iced`
+  - [ ] remove cacheloop logic(s)
+  - [ ] add static api key option in env
+  - [ ] add injectable middleware option
 
 ---
 
