@@ -1,5 +1,5 @@
 config = (dotenv = require('dotenv').config({
-  path: (process.env.ENVFILE or (__dirname + '/../.env'))
+  path: _dotenv_file = (process.env.ENVFILE or (__dirname + '/../.env'))
 })).parsed
 
 for k,v of config
@@ -16,6 +16,8 @@ if !root
 root.conf = root.config = config
 
 root.log = require './logger'
+
+log.info "ENVFILE", require('path').resolve _dotenv_file
 
 if conf.mongo
   if !env.SILENCE
