@@ -20,7 +20,7 @@ api_response.middleware = (req,res,next) ->
         component: pjson.name
         _meta: req.metadata
 
-      if conf.developer.show_error_stack and data.stack
+      if conf.developer_show_error_stack and data.stack
         obj.error_stack = data.stack
 
     else
