@@ -153,6 +153,7 @@ and runs the instance method, returning the result to the browser
 
 ## @todo
 - [ ] address vulns alerts from `wegweg` dep
+- [ ] remove memcached from stack
 - basically rework assumptive api authentication in `./core/internal.iced`
   - [ ] remove cacheloop logic(s)
   - [ ] add static api key option in env
